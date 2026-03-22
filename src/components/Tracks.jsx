@@ -7,7 +7,7 @@ const tracks = [
     house: "Gryffindor",
     color: "#740001",
     accent: "#D3A625",
-    icon: <Brain className="w-12 h-12" />,
+    image: "/red.svg", // Using local path, user needs to place their image in public/
     desc: "AI & Intelligent Systems."
   },
   {
@@ -15,7 +15,7 @@ const tracks = [
     house: "Ravenclaw",
     color: "#0E1A40",
     accent: "#946B2D",
-    icon: <Globe className="w-12 h-12" />,
+    image: "/blue.svg",
     desc: "Smart Edtech Solutions."
   },
   {
@@ -23,7 +23,7 @@ const tracks = [
     house: "Slytherin",
     color: "#1A472A",
     accent: "#5D5D5D",
-    icon: <Link className="w-12 h-12" />,
+    image: "/green.svg",
     desc: "Smart Finance Solutions."
   },
   {
@@ -31,7 +31,7 @@ const tracks = [
     house: "Hufflepuff",
     color: "#FFDB00",
     accent: "#000000",
-    icon: <Bot className="w-12 h-12" />,
+    image: "/yellow.svg",
     desc: "Smart Automation Solutions."
   }
 ];
@@ -39,7 +39,7 @@ const tracks = [
 export default function Tracks() {
   return (
     <section id="tracks" className="py-24 bg-darkBg relative overflow-hidden">
-      
+
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <h2 className="font-magic text-4xl md:text-5xl text-gold mb-4 border-glow inline-block px-8 py-2">
@@ -66,7 +66,7 @@ export default function Tracks() {
             >
               {/* Wooden rod at the top */}
               <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-[110%] h-4 bg-[#3E2723] rounded-sm shadow-md z-20 border-b border-[#2D1A11] border-t border-[#4E342E]" />
-              
+
               {/* Hanging Strings (visible mostly on desktop) */}
               <div className="absolute -top-6 left-1/4 w-0.5 h-6 bg-[#3E2723]/60 hidden md:block" />
               <div className="absolute -top-6 right-1/4 w-0.5 h-6 bg-[#3E2723]/60 hidden md:block" />
@@ -79,36 +79,36 @@ export default function Tracks() {
                 }}
               >
                 {/* Banner Top Gold Trim */}
-                <div 
+                <div
                   className="absolute top-0 left-0 w-full h-2"
                   style={{ backgroundColor: track.accent }}
                 />
-              {/* House internal glow */}
-              <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"
-                style={{ background: `radial-gradient(circle at center, ${track.accent} 0%, transparent 70%)` }}
-              />
+                {/* House internal glow */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none"
+                  style={{ background: `radial-gradient(circle at center, ${track.accent} 0%, transparent 70%)` }}
+                />
 
-              <div 
-                className="w-24 h-24 rounded-full flex items-center justify-center mb-6 relative z-10 shadow-inner"
-                style={{ backgroundColor: track.accent, color: track.accent === '#000000' ? track.color : '#fff' }}
-              >
-                {track.icon}
-              </div>
+                <div
+                  className="w-24 h-24 rounded-full flex items-center justify-center mb-6 relative z-10 shadow-inner overflow-hidden"
+                  style={{ backgroundColor: track.accent, color: track.accent === '#000000' ? track.color : '#fff' }}
+                >
+                  <img src={track.image} alt={track.house} className="w-full h-full object-cover scale-110 drop-shadow-md" />
+                </div>
 
-              <h3 
-                className="font-magic text-2xl mb-2 text-center drop-shadow-md pb-2 border-b-2"
-                style={{ color: track.accent, borderColor: track.accent }}
-              >
-                {track.name}
-              </h3>
-              
-              <p 
-                className="text-center text-sm font-sans mt-4 leading-relaxed tracking-wider w-full relative z-10"
-                style={{ color: track.color === '#FFDB00' ? '#333' : '#e2e8f0' }}
-              >
-                {track.desc}
-              </p>
+                <h3
+                  className="font-magic text-2xl mb-2 text-center drop-shadow-md pb-2 border-b-2"
+                  style={{ color: track.accent, borderColor: track.accent }}
+                >
+                  {track.name}
+                </h3>
+
+                <p
+                  className="text-center text-sm font-sans mt-4 leading-relaxed tracking-wider w-full relative z-10"
+                  style={{ color: track.color === '#FFDB00' ? '#333' : '#e2e8f0' }}
+                >
+                  {track.desc}
+                </p>
               </div>
             </motion.div>
           ))}

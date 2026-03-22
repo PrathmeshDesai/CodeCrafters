@@ -2,19 +2,35 @@ import { useState, useEffect, useRef } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 
 export default function AudioPlayer() {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const audioRef = useRef(null);
 
   useEffect(() => {
-    // We'll create a synthetic magical hum instead of a real audio file, 
-    // or use a free sound if available. For the demonstration, we'll just toggle state.
-    // In a real scenario, audioRef.current.play() would be used here.
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.play().catch(e => console.log("Audio play failed:", e));
-      } else {
-        audioRef.current.pause();
+    if (!audioRef.current) return;
+
+    if (isPlaying) {
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((e) => {
+          console.log("Autoplay blocked by browser. Waiting for user interaction.", e);
+          setIsPlaying(false);
+          
+          // Setup a one-time interaction listener to start audio
+          const enableAudio = () => {
+            if (audioRef.current) {
+              audioRef.current.play();
+              setIsPlaying(true);
+            }
+            document.removeEventListener('click', enableAudio);
+            document.removeEventListener('keydown', enableAudio);
+          };
+          
+          document.addEventListener('click', enableAudio);
+          document.addEventListener('keydown', enableAudio);
+        });
       }
+    } else {
+      audioRef.current.pause();
     }
   }, [isPlaying]);
 
@@ -32,6 +48,7 @@ export default function AudioPlayer() {
       <audio
         ref={audioRef}
         loop
+        autoPlay
         src="/harrypottersound.mpeg"
       />
     </div>
